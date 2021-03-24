@@ -96,6 +96,6 @@ $ nest g service NewModule
 
 ## Authors
 
-- [Jaka Purg] (https://www.linkedin.com/in/jaka-purg-9b25551a6/)
+- [Jaka Purg](https://www.linkedin.com/in/jaka-purg-9b25551a6/)
 
 
