@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is the back-end part for the PlantCare mobile app
 
 ## Installation
 
@@ -57,17 +57,45 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+## Migrations
 
-## Support
+```bash
+# generate new migration
+$ npm run typeorm migration:generate -- -n <migration_name>
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# show migrations
+$ npm run typeorm migration:show
 
-## Stay in touch
+# run migrations
+$ npm run typeorm migration:run
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Seeds 
 
-## License
+```bash
+# run seeds
+$ npm run seed
+```
+## Develop 
+Here are some guidelines for developers.
 
-Nest is [MIT licensed](LICENSE).
+### New module
+
+When you want to add new module with controller and service, always do it by using NestJS internal commands.
+
+```bash
+# Create new module
+$ nest g module NewModule
+
+# Create new controller
+$ nest g controller NewModule
+
+# Create new service
+$ nest g service NewModule
+```
+
+## Authors
+
+- [Jaka Purg] (https://www.linkedin.com/in/jaka-purg-9b25551a6/)
+
+
