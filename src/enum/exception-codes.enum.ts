@@ -1,0 +1,3 @@
+export const enum ExceptionCodeName {
+    INVALID_ENVIRONMENT_VARIABLE = 'INVALID_ENVIRONMENT_VARIABLE',
+}
