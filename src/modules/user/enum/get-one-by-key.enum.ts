@@ -1,4 +1,4 @@
 export enum GetOneByKey {
-    ID = 'id',
-    EMAIL = 'email'
+  ID = 'id',
+  EMAIL = 'email',
 }

@@ -1,32 +1,52 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { Exclude } from "class-transformer";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
+import { Exclude, Transform, Type } from 'class-transformer';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { UserRole } from '../user-role/user-role.entity';
 
 @Entity()
 export class User {
-    @ApiProperty()
-    @PrimaryGeneratedColumn()
-    id: number;
+  @ApiProperty()
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @ApiProperty()
-    @Column({
-        unique:true
-    })
-    email:string;
+  @ApiProperty()
+  @ManyToOne(() => UserRole)
+  @JoinColumn({ name: 'user_role_id' })
+  @Type(() => UserRole)
+  @Transform((user_role) => user_role.key, { toPlainOnly: true })
+  user_role: UserRole;
 
-    @Exclude()
-    @Column({nullable:true})
-    password?:string;
+  @Exclude()
+  @Column()
+  user_role_id: number;
 
-    @ApiProperty()
-    @Column({default:true})
-    notifications:boolean;
+  @ApiProperty()
+  @Column({
+    unique: true,
+  })
+  email: string;
 
-    @Exclude()
-    @CreateDateColumn()
-    created_at: Date;
+  @Exclude()
+  @Column({ nullable: true })
+  password?: string;
 
-    @Exclude()
-    @UpdateDateColumn()
-    updated_at: Date;
+  @ApiProperty()
+  @Column({ default: true })
+  notifications: boolean;
+
+  @Exclude()
+  @CreateDateColumn()
+  created_at: Date;
+
+  @Exclude()
+  @UpdateDateColumn()
+  updated_at: Date;
 }
