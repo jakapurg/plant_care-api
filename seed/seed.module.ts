@@ -1,40 +1,39 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SeedModule } from 'seed/seed.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { ConfigService } from './modules/config/config.service';
-import { EncryptionModule } from './modules/encryption/encryption.module';
-import { UserRoleModule } from './modules/user-role/user-role.module';
-import { UserModule } from './modules/user/user.module';
+import { AuthModule } from 'src/modules/auth/auth.module';
+import { ConfigService } from 'src/modules/config/config.service';
+import { EncryptionModule } from 'src/modules/encryption/encryption.module';
+import { UserRoleModule } from 'src/modules/user-role/user-role.module';
+import { UserModule } from 'src/modules/user/user.module';
+import { SeedService } from './seed.service';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+  imports:[
+    ConfigModule.forRoot({isGlobal:true}),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
+      imports:[ConfigModule],
+      useFactory:(configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('TYPEORM_HOST'),
         port: +configService.get<number>('TYPEORM_PORT'),
         username: configService.get('TYPEORM_USERNAME'),
         password: configService.get('TYPEORM_PASSWORD'),
         database: configService.get('TYPEORM_DATABASE'),
-        entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        migrations: [__dirname + '/database/migration/*{.ts,.js}'],
+        entities: [__dirname + '/../src/**/*.entity{.ts,.js}'],
+        migrations: [__dirname + '/../src/database/migration/*{.ts,.js}'],
         migrationsRun: configService.get('TYPEORM_MIGRATIONS_RUN') === 'true',
         synchronize: configService.get('TYPEORM_SYNCHRONIZE') === 'true',
         logging: configService.get('TYPEORM_LOGGING') === 'true',
       }),
-      inject: [ConfigService],
+      inject:[ConfigService]
     }),
-    UserModule,
     AuthModule,
+    UserModule,
     EncryptionModule,
     UserRoleModule,
-    SeedModule,
   ],
-  controllers: [],
-  providers: [],
+  providers: [SeedService],
+  exports:[SeedService]
 })
-export class AppModule {}
+export class SeedModule {}
