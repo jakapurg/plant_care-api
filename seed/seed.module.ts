@@ -9,11 +9,11 @@ import { UserModule } from 'src/modules/user/user.module';
 import { SeedService } from './seed.service';
 
 @Module({
-  imports:[
-    ConfigModule.forRoot({isGlobal:true}),
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
-      imports:[ConfigModule],
-      useFactory:(configService: ConfigService) => ({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         host: configService.get('TYPEORM_HOST'),
         port: +configService.get<number>('TYPEORM_PORT'),
@@ -26,7 +26,7 @@ import { SeedService } from './seed.service';
         synchronize: configService.get('TYPEORM_SYNCHRONIZE') === 'true',
         logging: configService.get('TYPEORM_LOGGING') === 'true',
       }),
-      inject:[ConfigService]
+      inject: [ConfigService],
     }),
     AuthModule,
     UserModule,
@@ -34,6 +34,6 @@ import { SeedService } from './seed.service';
     UserRoleModule,
   ],
   providers: [SeedService],
-  exports:[SeedService]
+  exports: [SeedService],
 })
 export class SeedModule {}

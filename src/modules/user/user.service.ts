@@ -1,8 +1,13 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { ExceptionCodeName } from 'src/enum/exception-codes.enum';
 import { getRepository } from 'typeorm';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
+import { RequestUserPayload } from '../auth/interface/request-user-payload.interface';
 import { EncryptionService } from '../encryption/encryption.service';
 import { UserRoleKey } from '../user-role/enum/user-role-key.enum';
 import { UserRoleService } from '../user-role/user-role.service';
@@ -53,6 +58,21 @@ export class UserService {
         }),
       )
       .getOne();
+    return user;
+  }
+
+  @Transactional()
+  async getOne(requestUserPayload: RequestUserPayload): Promise<User> {
+    const { id } = requestUserPayload;
+
+    const user = await this.getOneBy([
+      { getOneByKey: GetOneByKey.ID, value: id },
+    ]);
+    console.log(user);
+    if (!user) {
+      throw new NotFoundException(ExceptionCodeName.INVALID_USER_ID);
+    }
+
     return user;
   }
 }

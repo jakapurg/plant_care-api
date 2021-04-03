@@ -48,7 +48,6 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException(ExceptionCodeName.INVALID_CREDENTIALS);
     }
-    console.log(user);
     const isValidPassword =
       user.password &&
       (await this.encryptionService.comparePassword(password, user.password));

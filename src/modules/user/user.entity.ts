@@ -21,7 +21,7 @@ export class User {
   @ManyToOne(() => UserRole)
   @JoinColumn({ name: 'user_role_id' })
   @Type(() => UserRole)
-  @Transform((user_role) => user_role.key, { toPlainOnly: true })
+  @Transform((user_role) => user_role.value.key)
   user_role: UserRole;
 
   @Exclude()
