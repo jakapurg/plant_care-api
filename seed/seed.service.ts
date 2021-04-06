@@ -40,16 +40,19 @@ export class SeedService {
           email: 'info@plant-care.com',
           password: await this.encryptionService.hashPassword('PlantCare2021!'),
           user_role: userRoleAdmin,
+          username: 'admin',
         },
         {
           id: 2,
           email: 'user@plant-care.com',
           password: await this.encryptionService.hashPassword('PlantCareUser!'),
           user_role: userRoleUser,
+          username: 'user',
         },
       ].map((u) => {
         const user = new User();
         user.id = u.id;
+        user.username = u.username;
         user.email = u.email;
         user.password = u.password;
         user.user_role = u.user_role;

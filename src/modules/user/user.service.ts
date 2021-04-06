@@ -25,7 +25,7 @@ export class UserService {
 
   @Transactional()
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const { email, password } = createUserDto;
+    const { email, password, username } = createUserDto;
     const existingUser = await this.getOneBy([
       { getOneByKey: GetOneByKey.EMAIL, value: email },
     ]);
@@ -34,6 +34,7 @@ export class UserService {
     }
     const user = new User();
     user.email = email;
+    user.username = username;
     user.password = password;
     const userRole = await this.userRoleService.getUserRoleByUserRoleKey(
       UserRoleKey.USER,
@@ -68,7 +69,6 @@ export class UserService {
     const user = await this.getOneBy([
       { getOneByKey: GetOneByKey.ID, value: id },
     ]);
-    console.log(user);
     if (!user) {
       throw new NotFoundException(ExceptionCodeName.INVALID_USER_ID);
     }

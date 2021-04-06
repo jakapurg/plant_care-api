@@ -34,6 +34,10 @@ export class User {
   })
   email: string;
 
+  @ApiProperty()
+  @Column()
+  username: string;
+
   @Exclude()
   @Column({ nullable: true })
   password?: string;
