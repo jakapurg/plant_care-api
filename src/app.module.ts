@@ -7,6 +7,7 @@ import { ConfigService } from './modules/config/config.service';
 import { EncryptionModule } from './modules/encryption/encryption.module';
 import { UserRoleModule } from './modules/user-role/user-role.module';
 import { UserModule } from './modules/user/user.module';
+import { PlantModule } from './modules/plant/plant.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { UserModule } from './modules/user/user.module';
     EncryptionModule,
     UserRoleModule,
     SeedModule,
+    PlantModule,
   ],
   controllers: [],
   providers: [],

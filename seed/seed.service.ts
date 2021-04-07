@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from 'src/modules/config/config.service';
 import { EncryptionService } from 'src/modules/encryption/encryption.service';
+import { PlantService } from 'src/modules/plant/plant.service';
 import { UserRoleKey } from 'src/modules/user-role/enum/user-role-key.enum';
 import { UserRole } from 'src/modules/user-role/user-role.entity';
 import { User } from 'src/modules/user/user.entity';
@@ -12,6 +13,7 @@ export class SeedService {
   constructor(
     private configService: ConfigService,
     private encryptionService: EncryptionService,
+    private plantService: PlantService,
   ) {}
 
   @Transactional()
@@ -59,5 +61,21 @@ export class SeedService {
         return getRepository(User).save(user);
       }),
     );
+    const [rosePlant, orchidPlant] = await Promise.all([
+      this.plantService.create({
+        name: 'Rose',
+        info:
+          'A rose is a woody perennial flowering plant of the genus Rosa, in the family Rosaceae, or the flower it bears',
+        image_path: 'rose.png',
+        days_water: 4,
+      }),
+      this.plantService.create({
+        name: 'Cactus',
+        info:
+          'A cactus is a member of the plant family Cactaceae,a family comprising about 127 genera with some 1750 known species of the order Caryophyllales.',
+        image_path: 'cactus.png',
+        days_water: 12,
+      }),
+    ]);
   }
 }

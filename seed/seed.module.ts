@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { ConfigService } from 'src/modules/config/config.service';
 import { EncryptionModule } from 'src/modules/encryption/encryption.module';
+import { PlantModule } from 'src/modules/plant/plant.module';
 import { UserRoleModule } from 'src/modules/user-role/user-role.module';
 import { UserModule } from 'src/modules/user/user.module';
 import { SeedService } from './seed.service';
@@ -30,6 +31,7 @@ import { SeedService } from './seed.service';
     }),
     AuthModule,
     UserModule,
+    PlantModule,
     EncryptionModule,
     UserRoleModule,
   ],
