@@ -13,7 +13,7 @@ export class UserRoleService {
   }
 
   @Transactional()
-  async getUserRoleByUserRoleKey(key: UserRoleKey): Promise<UserRole | null> {
+  async getUserRoleByUserRoleKey(key: UserRoleKey): Promise<UserRole> {
     const res = await getRepository(UserRole)
       .createQueryBuilder('user_role')
       .where('user_role.key = :key', { key })

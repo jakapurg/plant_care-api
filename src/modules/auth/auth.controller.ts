@@ -8,10 +8,10 @@ import {
 } from '@nestjs/swagger';
 import { GetUser } from 'src/decorator/user.decorator';
 import { AccessToken } from '../encryption/interface/access-token.interface';
+import { CreateUserDto } from '../user/dto/create-user.dto';
 import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
 import { AuthService } from './auth.service';
-import { UserCredentialsDto } from './dto/user-credentials.dto';
 import { LocalAuthGuard } from './guard/local-auth.guard';
 
 @ApiTags('auth')
@@ -30,7 +30,7 @@ export class AuthController {
   })
   @Post('signup')
   async signUp(
-    @Body() userCredentialsDto: UserCredentialsDto,
+    @Body() userCredentialsDto: CreateUserDto,
   ): Promise<AccessToken> {
     return this.authService.signUp(userCredentialsDto);
   }
