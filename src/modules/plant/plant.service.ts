@@ -10,10 +10,11 @@ import { Plant } from './plant.entity';
 export class PlantService {
   @Transactional()
   async create(createPlantDto: CreatePlantDto): Promise<Plant> {
-    const { name, info, image_path, days_water } = createPlantDto;
+    const { name, info, image_path, days_water, care } = createPlantDto;
 
     const plant = new Plant();
     plant.name = name;
+    plant.care = care;
     plant.info = info;
     plant.image_path = image_path;
     plant.days_water = days_water;
@@ -23,9 +24,10 @@ export class PlantService {
 
   @Transactional()
   async update(id: number, updatePlantDto: UpdatePlantDto): Promise<Plant> {
-    const { name, info, image_path, days_water } = updatePlantDto;
+    const { name, info, image_path, days_water, care } = updatePlantDto;
     const plant = await this.getOneById(id);
     plant.name = name;
+    plant.care = care;
     plant.info = info;
     plant.image_path = image_path;
     plant.days_water = days_water;

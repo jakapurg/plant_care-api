@@ -22,4 +22,9 @@ export class UpdatePlantDto {
   @IsNumber()
   @IsPositive()
   days_water: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  care: string;
 }

@@ -23,6 +23,10 @@ export class Plant {
 
   @ApiProperty()
   @Column()
+  care: string;
+
+  @ApiProperty()
+  @Column()
   image_path: string;
 
   @ApiProperty()

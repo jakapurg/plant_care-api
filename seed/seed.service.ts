@@ -68,6 +68,7 @@ export class SeedService {
           'A rose is a woody perennial flowering plant of the genus Rosa, in the family Rosaceae, or the flower it bears',
         image_path: 'rose.png',
         days_water: 4,
+        care: "Roses's care instructions",
       }),
       this.plantService.create({
         name: 'Cactus',
@@ -75,6 +76,7 @@ export class SeedService {
           'A cactus is a member of the plant family Cactaceae,a family comprising about 127 genera with some 1750 known species of the order Caryophyllales.',
         image_path: 'cactus.png',
         days_water: 12,
+        care: "Cactus's care instructions",
       }),
     ]);
   }

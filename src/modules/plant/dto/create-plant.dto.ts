@@ -22,4 +22,9 @@ export class CreatePlantDto {
   @IsNumber()
   @IsPositive()
   days_water: number;
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  care: string;
 }
