@@ -8,6 +8,7 @@ import { EncryptionModule } from './modules/encryption/encryption.module';
 import { UserRoleModule } from './modules/user-role/user-role.module';
 import { UserModule } from './modules/user/user.module';
 import { PlantModule } from './modules/plant/plant.module';
+import { UserPlantModule } from './modules/user-plant/user-plant.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { PlantModule } from './modules/plant/plant.module';
     UserRoleModule,
     SeedModule,
     PlantModule,
+    UserPlantModule,
   ],
   controllers: [],
   providers: [],
