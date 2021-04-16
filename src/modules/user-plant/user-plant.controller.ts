@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -24,6 +25,7 @@ import { UserPlant } from './user-plant.entity';
 import { UserPlantService } from './user-plant.service';
 
 @ApiTags('user-plant')
+@ApiBearerAuth()
 @Controller('user-plant')
 export class UserPlantController {
   constructor(private readonly userPlantService: UserPlantService) {}
