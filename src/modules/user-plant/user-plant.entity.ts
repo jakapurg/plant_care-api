@@ -52,28 +52,10 @@ export class UserPlant {
 
   @AfterLoad()
   remainingWaterDays(): void {
-    /*if(this.last_water_date){
-            var waterDate = this.last_water_date;
-            const curDate = new Date();
-            waterDate.setDate(waterDate.getDate()+this.plant.days_water);
-            console.log(waterDate)
-            if(waterDate<curDate){
-                return 0;
-            }
-            else{
-                console.log(curDate)
-                return (new Date(waterDate.getTime()-curDate.getTime())).getDate();
-            }
-        }
-        else{
-            return 0;
-        }
-        return this.last_water_date;*/
     if (this.last_water_date) {
       const waterDate = this.last_water_date;
       const curDate = new Date();
       waterDate.setDate(waterDate.getDate() + this.plant.days_water);
-      console.log(waterDate);
       if (waterDate < curDate) {
         this.remaining_water_days = 0;
       } else {

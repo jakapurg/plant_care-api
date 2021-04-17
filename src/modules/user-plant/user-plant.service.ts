@@ -69,9 +69,8 @@ export class UserPlantService {
       .leftJoinAndSelect('user_plant.user', 'user')
       .leftJoinAndSelect('user_plant.plant', 'plant')
       .where('user_plant.id = :id', { id })
-      .where('user_plant.user.id = :user_id', { user_id })
+      .andWhere('user_plant.user.id = :user_id', { user_id })
       .getOne();
-    console.log(res);
     if (!res) {
       throw new NotFoundException(ExceptionCodeName.INVALID_USER_PLANT_ID);
     }
