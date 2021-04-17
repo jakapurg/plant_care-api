@@ -35,7 +35,9 @@ export class UserPlantService {
     userPlant.user = user;
     userPlant.plant = plant;
     userPlant.last_water_date = last_water_date;
-
+    userPlant.remaining_water_days = await this.calculateRemainingDays(
+      userPlant,
+    );
     return getRepository(UserPlant).save(userPlant);
   }
 
@@ -49,17 +51,27 @@ export class UserPlantService {
       throw new NotFoundException(ExceptionCodeName.INVALID_USER_PLANT_ID);
     }
     userPlant.last_water_date = new Date();
+    userPlant.remaining_water_days = await this.calculateRemainingDays(
+      userPlant,
+    );
     return getRepository(UserPlant).save(userPlant);
   }
 
   @Transactional()
   async getAll(requestUserPayload: RequestUserPayload): Promise<UserPlant[]> {
-    return await getRepository(UserPlant)
+    const res = await getRepository(UserPlant)
       .createQueryBuilder('user_plant')
       .leftJoinAndSelect('user_plant.user', 'user')
       .leftJoinAndSelect('user_plant.plant', 'plant')
       .where('user.id = :id', { id: requestUserPayload.id })
       .getMany();
+    res.map(
+      async (userPlant) =>
+        (userPlant.remaining_water_days = await this.calculateRemainingDays(
+          userPlant,
+        )),
+    );
+    return res;
   }
 
   @Transactional()
@@ -74,7 +86,23 @@ export class UserPlantService {
     if (!res) {
       throw new NotFoundException(ExceptionCodeName.INVALID_USER_PLANT_ID);
     }
+    res.remaining_water_days = await this.calculateRemainingDays(res);
     return res;
+  }
+
+  async calculateRemainingDays(userPlant: UserPlant): Promise<number> {
+    if (userPlant.last_water_date) {
+      const waterDate = new Date(userPlant.last_water_date);
+      const curDate = new Date();
+      waterDate.setDate(waterDate.getDate() + userPlant.plant.days_water);
+      if (waterDate < curDate) {
+        return 0;
+      } else {
+        return new Date(waterDate.getTime() - curDate.getTime()).getDate() - 1;
+      }
+    } else {
+      return 0;
+    }
   }
 
   @Transactional()

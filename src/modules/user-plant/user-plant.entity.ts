@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Type, Transform, Exclude, Expose } from 'class-transformer';
 import {
-  AfterLoad,
   Column,
   CreateDateColumn,
   Entity,
@@ -50,22 +49,6 @@ export class UserPlant {
   @Expose()
   remaining_water_days: number;
 
-  @AfterLoad()
-  remainingWaterDays(): void {
-    if (this.last_water_date) {
-      const waterDate = this.last_water_date;
-      const curDate = new Date();
-      waterDate.setDate(waterDate.getDate() + this.plant.days_water);
-      if (waterDate < curDate) {
-        this.remaining_water_days = 0;
-      } else {
-        this.remaining_water_days =
-          new Date(waterDate.getTime() - curDate.getTime()).getDate() - 1;
-      }
-    } else {
-      this.remaining_water_days = 0;
-    }
-  }
   @Exclude()
   @CreateDateColumn()
   created_at: Date;
