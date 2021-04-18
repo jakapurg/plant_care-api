@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -29,6 +30,10 @@ export class UserPlantService {
       throw new UnauthorizedException(ExceptionCodeName.INVALID_CREDENTIALS);
     }
     const { plant_id, last_water_date } = createUserPlantDto;
+    const existingUserPlant = await this.getOneByPlantId(requestUserPayload.id,plant_id);
+    if(existingUserPlant){
+      throw new ConflictException(ExceptionCodeName.USER_PLANT_CONFLICT)
+    }
     const userPlant = new UserPlant();
     const plant = await this.plantService.getOneById(plant_id);
 
@@ -90,6 +95,14 @@ export class UserPlantService {
     return res;
   }
 
+  @Transactional()
+  async getOneByPlantId(user_id:number, plant_id:number): Promise<UserPlant | undefined> {
+    return getRepository(UserPlant)
+      .createQueryBuilder('user_plant')
+      .where('user_plant.user_id = :user_id',{user_id})
+      .andWhere('user_plant.plant_id = :plant_id',{plant_id})
+      .getOne();
+  }
   async calculateRemainingDays(userPlant: UserPlant): Promise<number> {
     if (userPlant.last_water_date) {
       const waterDate = new Date(userPlant.last_water_date);
