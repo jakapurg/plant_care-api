@@ -24,7 +24,7 @@
 
 ## Description
 
-This is the back-end part for the PlantCare mobile app
+This is the back-end part for the [Plant Care](https://github.com/TomazMazej/plant_care) mobile app. Documentation with all the endpoints can be accessed at localhost:3000/doc once the app is running.
 
 ## Installation
 
@@ -45,18 +45,6 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
 ## Migrations
 
 ```bash
